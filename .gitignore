@@ -49,3 +49,6 @@ public.crt
 *~
 .eslintcache
 .claude/
+
+# Ignore Bin files
+bin/
