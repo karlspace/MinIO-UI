@@ -62,11 +62,11 @@ COPY --from=backend-builder /workspace/console /app/console
 
 # Copy entrypoint script
 COPY docker/entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
 
-# Create directory for certificates
-RUN mkdir -p /home/console/.console/certs && \
-    chown -R console:console /home/console
+# Create directory for certificates and set permissions
+RUN chmod +x /app/entrypoint.sh && \
+    mkdir -p /home/console/.console/certs && \
+    chown -R console:console /home/console /app
 
 # Switch to non-root user
 USER console
