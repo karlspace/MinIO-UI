@@ -34,6 +34,9 @@ RUN go mod download
 # Copy source code
 COPY . .
 
+# Ensure go.mod and go.sum are in sync
+RUN go mod tidy
+
 # Copy built frontend assets from previous stage
 COPY --from=frontend-builder /workspace/web-app/build ./web-app/build
 
@@ -64,7 +67,9 @@ COPY --from=backend-builder /workspace/console /app/console
 COPY docker/entrypoint.sh /app/entrypoint.sh
 
 # Create directory for certificates and set permissions
-RUN chmod +x /app/entrypoint.sh && \
+# Fix line endings for entrypoint script (in case of Windows CRLF)
+RUN sed -i 's/\r$//' /app/entrypoint.sh && \
+    chmod +x /app/entrypoint.sh && \
     mkdir -p /home/console/.console/certs && \
     chown -R console:console /home/console /app
 
