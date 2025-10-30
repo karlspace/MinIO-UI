@@ -1,0 +1,59 @@
+# Git files
+.git/
+.gitignore
+.github/
+
+# Documentation
+*.md
+docs/
+images/
+
+# Build artifacts
+console
+*.test
+web-app/build/
+web-app/coverage/
+coverage/
+*.out
+
+# Node modules and cache
+web-app/node_modules/
+.yarn/cache/
+.yarn/install-state.gz
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Test files
+*_test.go
+test/
+tests/
+integration/
+replication/
+sso-integration/
+
+# Docker files
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+
+# CI/CD
+.gitlab-ci.yml
+.travis.yml
+.circleci/
+
+# Development tools
+verify-gofmt.sh
+cross-compile.sh
+*.sh
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.log
