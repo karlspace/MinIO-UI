@@ -1,6 +1,20 @@
-# Changelog
+# Changelog - Admin Console for MinIO®
 
-## Release v1.7.6
+> **Disclaimer:** MinIO® is a registered trademark of MinIO, Inc. This project is an independent, third-party administrative interface and is not affiliated with MinIO, Inc.
+
+## Release v1.7.6-extended (This Fork)
+
+Based on MinIO Console v1.7.6 with security updates from v2.0.0-v2.0.4 applied:
+- Go 1.23.8 (latest)
+- Security patches for Go dependencies (crypto v0.36.0, net v0.38.0, oauth2 v0.28.0)
+- Security patches for npm packages (http-proxy-middleware, formidable)
+- Full administrative functionality preserved
+- Docker deployment optimized
+- Project rebranded with proper disclaimers
+
+---
+
+## Release v1.7.6 (Upstream)
 
 Bug Fix:
 

@@ -1,5 +1,6 @@
 {
-  "name": "MinIO Console",
+  "name": "Admin Console for MinIO",
+  "short_name": "Admin Console",
   "icons": [
     {
       "src": "favicon.ico",
