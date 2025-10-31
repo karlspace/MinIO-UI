@@ -115,7 +115,7 @@ The following commits from main were NOT cherry-picked (evaluation needed):
 - [ ] Service accounts work
 
 ### Docker Tests
-- [ ] `docker build -f docker/Dockerfile -t minio-console:full-admin .`
+- [ ] `docker build -f docker/Dockerfile -t admin-console-minio:full-admin .`
 - [ ] Container starts successfully
 - [ ] All features accessible in container
 - [ ] Health check passes
@@ -139,18 +139,18 @@ yarn build
 
 ### Build Docker Image
 ```bash
-docker build -f docker/Dockerfile -t minio-console:full-admin-secure .
+docker build -f docker/Dockerfile -t admin-console-minio:full-admin-secure .
 ```
 
 ### Run Docker Container
 ```bash
 docker run -d \
-  --name minio-console-full \
+  --name admin-console-minio-full \
   -p 9090:9090 \
   -e CONSOLE_MINIO_SERVER="https://s3-console.shared.app.bauer-group.com" \
   -e CONSOLE_PBKDF_PASSPHRASE="$(openssl rand -base64 32)" \
   -e CONSOLE_PBKDF_SALT="$(openssl rand -base64 32)" \
-  minio-console:full-admin-secure
+  admin-console-minio:full-admin-secure
 ```
 
 ---
@@ -168,7 +168,7 @@ docker run -d \
 ## Maintenance Plan
 
 ### Short-term (Weekly)
-- Monitor MinIO Console releases for security updates
+- Monitor Admin Console for MinIO® releases for security updates
 - Review and cherry-pick security patches
 
 ### Medium-term (Monthly)

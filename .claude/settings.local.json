@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(test:*)",
+      "Bash(git merge-base:*)",
+      "Bash(git revert:*)",
+      "Bash(git add:*)",
+      "Bash(go mod tidy:*)",
+      "Bash(git commit:*)",
+      "Bash(docker build:*)",
+      "Bash(git rm:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

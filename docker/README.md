@@ -1,13 +1,24 @@
-# MinIO Console Docker Build
+# Admin Console for MinIO® - Docker Build
 
-This directory contains the Docker configuration for building and running MinIO Console.
+**A third-party management UI for MinIO® object storage servers.**
+
+## ⚠️ Disclaimer
+
+**MinIO® is a registered trademark of MinIO, Inc.**
+
+This project is an independent, third-party administrative interface and is **not affiliated with, endorsed by, or sponsored by MinIO, Inc.**
+
+---
+
+This directory contains the Docker configuration for building and running Admin Console for MinIO®.
 
 ## Files
 
-- **Dockerfile**: Multi-stage build for MinIO Console
+- **Dockerfile**: Multi-stage build for Admin Console for MinIO®
 - **.dockerignore**: Excludes unnecessary files from Docker context
 - **docker-compose.yml**: Example Docker Compose setup
 - **README.md**: This file
+- **entrypoint.sh**: Startup script with auto-configuration
 
 ## Quick Start
 
@@ -16,14 +27,14 @@ This directory contains the Docker configuration for building and running MinIO 
 From the project root directory:
 
 ```bash
-docker build -f docker/Dockerfile -t minio-console:latest .
+docker build -f docker/Dockerfile -t admin-console-minio:latest .
 ```
 
 Or from the docker directory:
 
 ```bash
 cd docker
-docker build -f Dockerfile -t minio-console:latest ..
+docker build -f Dockerfile -t admin-console-minio:latest ..
 ```
 
 ### Run with Docker
@@ -31,21 +42,21 @@ docker build -f Dockerfile -t minio-console:latest ..
 **Simplest way (auto-generates secrets):**
 ```bash
 docker run -d \
-  --name minio-console \
+  --name admin-console-minio \
   -p 9090:9090 \
   -e CONSOLE_MINIO_SERVER="http://your-minio-server:9000" \
-  minio-console:latest
+  admin-console-minio:latest
 ```
 
 **With persistent sessions (recommended for production):**
 ```bash
 docker run -d \
-  --name minio-console \
+  --name admin-console-minio \
   -p 9090:9090 \
   -e CONSOLE_PBKDF_PASSPHRASE="your-secret-passphrase" \
   -e CONSOLE_PBKDF_SALT="your-secret-salt" \
   -e CONSOLE_MINIO_SERVER="http://your-minio-server:9000" \
-  minio-console:latest
+  admin-console-minio:latest
 ```
 
 ### Run with Docker Compose

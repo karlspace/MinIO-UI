@@ -1,6 +1,7 @@
 {
-  "name": "web-app",
-  "version": "1.2.0",
+  "name": "admin-console-minio-webapp",
+  "version": "1.7.6-extended",
+  "description": "Admin Console for MinIO® - A third-party management UI for MinIO object storage servers",
   "license": "AGPL-3.0-or-later",
   "homepage": ".",
   "private": true,

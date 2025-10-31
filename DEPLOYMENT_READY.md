@@ -1,9 +1,9 @@
-# ✅ MinIO Console - Full Admin Version - DEPLOYMENT READY
+# ✅ Admin Console for MinIO® - Full Admin Version - DEPLOYMENT READY
 
 ## 🎉 Status: PRODUCTION READY
 
 **Branch:** `feature/restore-full-admin-v2`
-**Docker Image:** `minio-console:full-admin-secure`
+**Docker Image:** `admin-console-minio:full-admin-secure`
 **Build Status:** ✅ Successful
 **Tests:** ✅ Entrypoint functional
 
@@ -58,12 +58,12 @@
 ### Pull & Run (if image is published)
 ```bash
 docker run -d \
-  --name minio-console \
+  --name admin-console-minio \
   -p 9090:9090 \
   -e CONSOLE_MINIO_SERVER="https://your-minio-server:9000" \
   -e CONSOLE_PBKDF_PASSPHRASE="$(openssl rand -base64 32)" \
   -e CONSOLE_PBKDF_SALT="$(openssl rand -base64 32)" \
-  minio-console:full-admin-secure
+  admin-console-minio:full-admin-secure
 ```
 
 ### Build from Source
@@ -72,14 +72,14 @@ docker run -d \
 git checkout feature/restore-full-admin-v2
 
 # Build Docker image
-docker build -f docker/Dockerfile -t minio-console:full-admin-secure .
+docker build -f docker/Dockerfile -t admin-console-minio:full-admin-secure .
 
 # Run
 docker run -d \
-  --name minio-console \
+  --name admin-console-minio \
   -p 9090:9090 \
   -e CONSOLE_MINIO_SERVER="https://s3-console.shared.app.bauer-group.com" \
-  minio-console:full-admin-secure
+  admin-console-minio:full-admin-secure
 ```
 
 ### With Docker Compose
@@ -87,9 +87,9 @@ docker run -d \
 version: '3.8'
 
 services:
-  minio-console:
-    image: minio-console:full-admin-secure
-    container_name: minio-console
+  admin-console-minio:
+    image: admin-console-minio:full-admin-secure
+    container_name: admin-console-minio
     ports:
       - "9090:9090"
       - "9443:9443"
@@ -140,12 +140,12 @@ CONSOLE_DEBUG_LOGLEVEL=0
 
 ### Check Container Status
 ```bash
-docker ps --filter name=minio-console
+docker ps --filter name=admin-console-minio
 ```
 
 ### View Logs
 ```bash
-docker logs minio-console
+docker logs admin-console-minio
 ```
 
 ### Test Health
@@ -237,7 +237,7 @@ Open browser: `http://localhost:9090`
 ## 🛠️ Maintenance Plan
 
 ### Weekly
-- [ ] Monitor MinIO Console releases
+- [ ] Monitor Admin Console for MinIO® releases
 - [ ] Check for critical security advisories
 
 ### Monthly
@@ -268,16 +268,16 @@ Open browser: `http://localhost:9090`
 ### Container won't start
 ```bash
 # Check logs
-docker logs minio-console
+docker logs admin-console-minio
 
 # Check if CONSOLE_MINIO_SERVER is set
-docker inspect minio-console | grep CONSOLE_MINIO_SERVER
+docker inspect admin-console-minio | grep CONSOLE_MINIO_SERVER
 ```
 
 ### Can't connect to MinIO
 ```bash
 # Test MinIO connectivity from container
-docker exec minio-console wget -O- http://your-minio:9000/minio/health/live
+docker exec admin-console-minio wget -O- http://your-minio:9000/minio/health/live
 
 # Check network
 docker network inspect bridge
@@ -289,16 +289,16 @@ docker network inspect bridge
 docker run -d \
   -e CONSOLE_PBKDF_PASSPHRASE="your-secret" \
   -e CONSOLE_PBKDF_SALT="your-salt" \
-  minio-console:full-admin-secure
+  admin-console-minio:full-admin-secure
 ```
 
 ### Permission denied errors
 ```bash
 # Check file ownership
-docker exec minio-console ls -la /app/
+docker exec admin-console-minio ls -la /app/
 
 # Rebuild with fresh image
-docker build --no-cache -f docker/Dockerfile -t minio-console:full-admin-secure .
+docker build --no-cache -f docker/Dockerfile -t admin-console-minio:full-admin-secure .
 ```
 
 ---
@@ -346,5 +346,5 @@ docker build --no-cache -f docker/Dockerfile -t minio-console:full-admin-secure 
 
 **Status:** ✅ READY FOR DEPLOYMENT
 **Last Updated:** 2025-10-31
-**Build ID:** `minio-console:full-admin-secure`
+**Build ID:** `admin-console-minio:full-admin-secure`
 **Image SHA:** `sha256:59e34199f24351ed31324bcd1d88bd1845abcca8bc1adfa8ed266fbb16c1f43b`
