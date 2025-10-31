@@ -138,27 +138,43 @@ The following user-facing files have been updated with proper disclaimers and br
 - These created false impression of official MinIO product
 - Removed references from README.md
 
-### MinIO Logos Found
+### MinIO Logos - ALL REMOVED
 
-The following MinIO logo files exist in the project:
-- `web-app/public/minio-logo.svg`
-- `web-app/build/minio-logo.svg`
-- `web-app/public/minioTier.png`
-- `web-app/build/minioTier.png`
+✅ **DELETED (17 files total):**
+- `web-app/public/minio-logo.svg` - Official MinIO flamingo logo
+- `web-app/public/minioTier.png` - MinIO tier branding
+- `web-app/public/logo192.png` - MinIO flamingo icon
+- `web-app/public/logo512.png` - MinIO flamingo icon
+- `web-app/src/logo.svg` - MinIO flamingo logo
+- `web-app/public/favicon.ico` - MinIO flamingo favicon
+- `web-app/public/favicon-16x16.png` - MinIO flamingo
+- `web-app/public/favicon-32x32.png` - MinIO flamingo
+- `web-app/public/favicon-96x96.png` - MinIO flamingo
+- `web-app/public/android-icon-36x36.png` - MinIO flamingo
+- `web-app/public/android-icon-48x48.png` - MinIO flamingo
+- `web-app/public/android-icon-72x72.png` - MinIO flamingo
+- `web-app/public/android-icon-96x96.png` - MinIO flamingo
+- `web-app/public/android-icon-144x144.png` - MinIO flamingo
+- `web-app/public/android-icon-192x192.png` - MinIO flamingo
+- `web-app/public/apple-icon-180x180.png` - MinIO flamingo
+- `web-app/public/safari-pinned-tab.svg` - MinIO flamingo
 
-✅ **STATUS: Not Currently Referenced**
-- Grep search confirmed these files are not referenced in source code
-- Likely legacy files or used dynamically for MinIO server integration
-- Since they're not actively used in UI code, they're acceptable
+**Reason:** All icons displayed the trademarked MinIO flamingo logo
 
-**Note:** These may be dynamically loaded by MinIO server itself to display its own branding in appropriate contexts.
+### New Neutral App Icons - CREATED
 
-### App Icons
+✅ **NEW ICONS (Brand-Neutral Design):**
+- `web-app/src/logo.svg` - Generic storage/database cylinders with admin gear icon
+- `web-app/public/logo.svg` - Same design as src/logo.svg
+- `web-app/public/favicon.svg` - Simplified icon version (32x32 optimized)
+- `web-app/public/logo192.png.svg` - PWA icon 192x192
+- `web-app/public/logo512.png.svg` - PWA icon 512x512
 
-✅ **CLEAN**
-- logo192.png, logo512.png, favicon.ico, etc. are generic
-- Not MinIO Inc.-specific branding
-- Used in manifest.json appropriately
+**Design:** Blue gradient background with stacked database cylinders and orange gear symbol
+- Represents storage/object management (cylinders)
+- Represents admin console (gear)
+- No trademark conflicts
+- Generic enough for third-party use
 
 ---
 

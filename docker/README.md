@@ -45,6 +45,7 @@ docker run -d \
   --name admin-console-minio \
   -p 9090:9090 \
   -e CONSOLE_MINIO_SERVER="http://your-minio-server:9000" \
+  -e CONSOLE_MINIO_REGION="us-east-1" \
   admin-console-minio:latest
 ```
 
@@ -56,6 +57,7 @@ docker run -d \
   -e CONSOLE_PBKDF_PASSPHRASE="your-secret-passphrase" \
   -e CONSOLE_PBKDF_SALT="your-secret-salt" \
   -e CONSOLE_MINIO_SERVER="http://your-minio-server:9000" \
+  -e CONSOLE_MINIO_REGION="us-east-1" \
   admin-console-minio:latest
 ```
 
@@ -71,6 +73,7 @@ docker run -d \
    CONSOLE_PBKDF_PASSPHRASE=your-secret-passphrase
    CONSOLE_PBKDF_SALT=your-secret-salt
    CONSOLE_MINIO_SERVER=http://minio:9000
+   CONSOLE_MINIO_REGION=us-east-1
    ```
 
 3. Start the services:
@@ -84,6 +87,7 @@ docker run -d \
 ### Required Environment Variables
 
 - `CONSOLE_MINIO_SERVER`: URL of your MinIO server (e.g., `http://localhost:9000`)
+- `CONSOLE_MINIO_REGION`: MinIO server region (e.g., `us-east-1`, `shared`, or custom region)
 
 ### Auto-Generated Environment Variables
 

@@ -14,6 +14,8 @@ This project is an **independent, third-party admin interface** and is **not aff
 
 This is a community-maintained fork that preserves the full administrative functionality that was available in MinIO Console v1.7.6, with added security updates.
 
+All trademarks, service marks, and company names are the property of their respective owners.
+
 ---
 
 ## About
@@ -40,6 +42,7 @@ docker run -d \
   --name admin-console-minio \
   -p 9090:9090 \
   -e CONSOLE_MINIO_SERVER="http://your-minio-server:9000" \
+  -e CONSOLE_MINIO_REGION="us-east-1" \
   admin-console-minio:latest
 ```
 
@@ -362,18 +365,6 @@ This project is built upon the MinIO Console codebase (v1.7.6) and maintains the
 - **Issues:** Report bugs and request features via GitHub Issues
 - **Discussions:** Community discussions and support
 - **Documentation:** See [docs](docs/) directory
-
----
-
-## Disclaimer (Repeated)
-
-**MinIO® is a registered trademark of MinIO, Inc.**
-
-**Admin Console for MinIO®** is an independent, third-party administrative interface. This project is **not affiliated with, endorsed by, or sponsored by MinIO, Inc.**
-
-The project maintains compatibility with MinIO® object storage servers but is developed and maintained independently by the community.
-
-All trademarks, service marks, and company names are the property of their respective owners.
 
 ---
 
