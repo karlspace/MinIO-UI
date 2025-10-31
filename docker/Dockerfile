@@ -4,18 +4,19 @@
 # Stage 1: Build Frontend
 FROM node:18-alpine AS frontend-builder
 
+# Install git (required for dependencies from GitHub)
+RUN apk add --no-cache git
+
 WORKDIR /workspace/web-app
 
-# Copy frontend package files for dependency installation
-COPY web-app/package.json web-app/.yarnrc.yml ./
-
-# Install dependencies (generates new lockfile due to package rename)
-# Note: Not copying old yarn.lock because package.json name was changed (rebranding)
-RUN corepack enable && \
-    yarn install
-
-# Copy frontend source code
+# Copy all frontend source code
 COPY web-app/ ./
+
+# Remove old yarn.lock and regenerate with new package name
+# Note: yarn.lock is outdated after package.json name change (rebranding)
+RUN rm -f yarn.lock && \
+    corepack enable && \
+    yarn install
 
 # Build static assets
 RUN yarn build
