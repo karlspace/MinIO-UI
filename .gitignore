@@ -48,3 +48,4 @@ public.crt
 *.code-workspace
 *~
 .eslintcache
+.claude/
