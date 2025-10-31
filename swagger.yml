@@ -2,8 +2,8 @@
 
 swagger: "2.0"
 info:
-  title: MinIO Console Server
-  version: 0.1.0
+  title: Admin Console for MinIO - API Server
+  version: 1.7.6-extended
 consumes:
   - application/json
 produces:
@@ -17,8 +17,8 @@ securityDefinitions:
   key:
     type: oauth2
     flow: accessCode
-    authorizationUrl: http://min.io
-    tokenUrl: http://min.io
+    authorizationUrl: http://localhost
+    tokenUrl: http://localhost
   anonymous:
     name: X-Anonymous
     in: header
