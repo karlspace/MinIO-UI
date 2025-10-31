@@ -10,8 +10,9 @@ WORKDIR /workspace/web-app
 COPY web-app/package.json web-app/yarn.lock web-app/.yarnrc.yml ./
 
 # Install dependencies
+# Note: Not using --immutable because package.json name was changed (rebranding)
 RUN corepack enable && \
-    yarn install --immutable
+    yarn install
 
 # Copy frontend source code
 COPY web-app/ ./

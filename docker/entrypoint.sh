@@ -38,8 +38,20 @@ if [ -z "$CONSOLE_MINIO_SERVER" ]; then
     exit 1
 fi
 
+# Check if CONSOLE_MINIO_REGION is set
+if [ -z "$CONSOLE_MINIO_REGION" ]; then
+    echo "❌ ERROR: CONSOLE_MINIO_REGION is not set!"
+    echo "   Please set the MinIO server region, e.g.:"
+    echo "   export CONSOLE_MINIO_REGION=us-east-1"
+    echo "   OR"
+    echo "   export CONSOLE_MINIO_REGION=shared"
+    echo ""
+    exit 1
+fi
+
 echo "✅ Configuration validated"
 echo "   MinIO Server: $CONSOLE_MINIO_SERVER"
+echo "   MinIO Region: $CONSOLE_MINIO_REGION"
 echo "   Console Port: ${CONSOLE_PORT:-9090}"
 echo ""
 

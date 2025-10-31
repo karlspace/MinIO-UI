@@ -1,17 +1,20 @@
 version: '3.8'
 
 services:
-  minio-console:
+  admin-console-minio:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    container_name: minio-console
+    container_name: admin-console-minio
     ports:
       - "9090:9090"
       - "9443:9443"
     environment:
       # Required: MinIO Server endpoint
       CONSOLE_MINIO_SERVER: "${CONSOLE_MINIO_SERVER:-http://minio:9000}"
+
+      # Required: MinIO Server region
+      CONSOLE_MINIO_REGION: "${CONSOLE_MINIO_REGION:-us-east-1}"
 
       # Optional: If not set, random values will be generated on startup
       # WARNING: Sessions will be lost on container restart without these!
