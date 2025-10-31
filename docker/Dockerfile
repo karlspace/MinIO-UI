@@ -11,7 +11,7 @@ COPY web-app/package.json web-app/yarn.lock web-app/.yarnrc.yml ./
 
 # Install dependencies
 RUN corepack enable && \
-    yarn install --frozen-lockfile
+    yarn install --immutable
 
 # Copy frontend source code
 COPY web-app/ ./
