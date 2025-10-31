@@ -33,7 +33,6 @@ import {
   GroupsMenuIcon,
   IdentityMenuIcon,
   LambdaIcon,
-  LicenseIcon,
   LockOpenIcon,
   LoginIcon,
   LogsMenuIcon,
@@ -88,7 +87,6 @@ const validateItem = (item: IMenuItem) => {
 
 export const validRoutes = (
   features: string[] | null | undefined,
-  licenseNotification: boolean = false,
 ) => {
   const ldapIsEnabled = (features && features.includes("ldap-idp")) || false;
   const kmsIsEnabled = (features && features.includes("kms")) || false;
@@ -112,7 +110,7 @@ export const validRoutes = (
     },
     {
       group: "User",
-      path: "https://min.io/docs/minio/linux/index.html?ref=con",
+      path: "https://github.com/karlspace/MinIO-UI",
       name: "Documentation",
       icon: <DocumentationIcon />,
       forceDisplay: true,
@@ -224,15 +222,6 @@ export const validRoutes = (
       name: "Configuration",
       id: "configurations",
       icon: <SettingsIcon />,
-    },
-    {
-      group: "Administrator",
-      path: IAM_PAGES.LICENSE,
-      name: "License",
-      id: "license",
-      icon: <LicenseIcon />,
-      badge: licenseNotification,
-      forceDisplay: true,
     },
   ];
 
