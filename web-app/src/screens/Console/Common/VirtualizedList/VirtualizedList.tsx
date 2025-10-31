@@ -52,16 +52,18 @@ const VirtualizedList = ({
 
   return (
     <Fragment>
+      {/* @ts-ignore - Type incompatibility with TypeScript 5.9 */}
       <InfiniteLoader
         isItemLoaded={isItemLoaded}
         loadMoreItems={loadMoreItems}
         itemCount={totalItems}
       >
         {({ onItemsRendered, ref }) => (
-          // @ts-ignore
+          // @ts-ignore - Type incompatibility with TypeScript 5.9
           <AutoSizer>
             {({ width, height }) => {
               return (
+                /* @ts-ignore - Type incompatibility with TypeScript 5.9 */
                 <List
                   itemSize={defaultHeight || 220}
                   height={height}

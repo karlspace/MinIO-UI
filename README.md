@@ -2,7 +2,7 @@
 
 ![license](https://img.shields.io/badge/license-AGPL%20V3-blue)
 
-**A third-party management UI for MinIO® object storage servers.**
+**umentation**
 
 ---
 

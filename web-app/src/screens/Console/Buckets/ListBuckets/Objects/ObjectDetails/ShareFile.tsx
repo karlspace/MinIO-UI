@@ -228,7 +228,8 @@ const ShareFile = ({
             >
               <ReadBox
                 actionButton={
-                  <CopyToClipboard text={shareURL} as={React.Fragment as any}>
+                  /* @ts-ignore - Type incompatibility with TypeScript 5.9 */
+                  <CopyToClipboard text={shareURL}>
                     <Button
                       id={"copy-path"}
                       variant="regular"

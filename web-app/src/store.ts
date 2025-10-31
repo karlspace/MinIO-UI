@@ -30,7 +30,7 @@ import licenseReducer from "./screens/Console/License/licenseSlice";
 import destinationSlice from "./screens/Console/EventDestinations/destinationsSlice";
 import { objectBrowserWSMiddleware } from "./websockets/objectBrowserWSMiddleware";
 
-let objectsWS: WebSocket;
+let objectsWS: WebSocket | undefined;
 
 const rootReducer = combineReducers({
   system: systemReducer,
@@ -49,6 +49,7 @@ const rootReducer = combineReducers({
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
+    // @ts-ignore - objectsWS is initialized later
     getDefaultMiddleware().concat(objectBrowserWSMiddleware(objectsWS)),
 });
 

@@ -256,7 +256,8 @@ const BrowserBreadcrumbs = ({
           goBackFunction={goBackFunction}
           additionalOptions={
             <Fragment>
-              <CopyToClipboard text={`${bucketName}/${splitPaths.join("/")}`} as={React.Fragment as any}>
+              {/* @ts-ignore - Type incompatibility with TypeScript 5.9 */}
+              <CopyToClipboard text={`${bucketName}/${splitPaths.join("/")}`}>
                 <Button
                   id={"copy-path"}
                   icon={

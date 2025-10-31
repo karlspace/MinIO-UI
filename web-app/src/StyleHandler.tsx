@@ -41,6 +41,7 @@ const StyleHandler = ({ children }: IStyleHandler) => {
 
   return (
     <Fragment>
+      {/* @ts-ignore - Type incompatibility with TypeScript 5.9 */}
       <GlobalStyles />
       <ThemeHandler darkMode={darkMode} customTheme={thm}>
         {children}
