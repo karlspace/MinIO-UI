@@ -7,10 +7,10 @@ FROM node:18-alpine AS frontend-builder
 WORKDIR /workspace/web-app
 
 # Copy frontend package files for dependency installation
-COPY web-app/package.json web-app/yarn.lock web-app/.yarnrc.yml ./
+COPY web-app/package.json web-app/.yarnrc.yml ./
 
-# Install dependencies
-# Note: Not using --immutable because package.json name was changed (rebranding)
+# Install dependencies (generates new lockfile due to package rename)
+# Note: Not copying old yarn.lock because package.json name was changed (rebranding)
 RUN corepack enable && \
     yarn install
 
