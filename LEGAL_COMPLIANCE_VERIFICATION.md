@@ -129,6 +129,15 @@ The following user-facing files have been updated with proper disclaimers and br
 
 ## Assets and Logos
 
+### Screenshots with MinIO Branding
+
+✅ **REMOVED**
+- Deleted entire `/images` directory containing screenshots with official MinIO branding
+- Files removed: `pic1.png`, `pic2.png`, `pic3.png`
+- **Reason:** All screenshots showed "MinIO OBJECT STORE" logo in UI
+- These created false impression of official MinIO product
+- Removed references from README.md
+
 ### MinIO Logos Found
 
 The following MinIO logo files exist in the project:
@@ -140,10 +149,9 @@ The following MinIO logo files exist in the project:
 ✅ **STATUS: Not Currently Referenced**
 - Grep search confirmed these files are not referenced in source code
 - Likely legacy files or used dynamically for MinIO server integration
-- Since they're not used, they could be removed OR
-- If used for indicating MinIO server compatibility, they're fair use
+- Since they're not actively used in UI code, they're acceptable
 
-**Recommendation:** Leave in place unless they cause issues. They may be dynamically loaded to display MinIO server branding in appropriate contexts (e.g., showing what type of server you're managing).
+**Note:** These may be dynamically loaded by MinIO server itself to display its own branding in appropriate contexts.
 
 ### App Icons
 

@@ -29,10 +29,6 @@ Admin Console for MinIO® is a comprehensive web-based management interface for 
 - **KMS Integration** - Key Management Service configuration
 - **Service Management** - Server control and diagnostics
 
-| Object Browser | Dashboard | Bucket Management |
-|----------------|-----------|-------------------|
-| ![Object Browser](images/pic3.png) | ![Dashboard](images/pic1.png) | ![Dashboard](images/pic2.png) |
-
 ---
 
 ## Installation
