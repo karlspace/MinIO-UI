@@ -2,10 +2,6 @@
 
 ![license](https://img.shields.io/badge/license-AGPL%20V3-blue)
 
-**umentation**
-
----
-
 ## ⚠️ Disclaimer
 
 **MinIO® is a registered trademark of MinIO, Inc.**
