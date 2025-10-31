@@ -49,7 +49,7 @@ const CodeMirrorWrapper = ({
       helpTools={
         <Fragment>
           <TooltipWrapper tooltip={"Copy to Clipboard"}>
-            <CopyToClipboard text={value}>
+            <CopyToClipboard text={value} as={React.Fragment as any}>
               <Button
                 type={"button"}
                 id={"copy-code-mirror"}

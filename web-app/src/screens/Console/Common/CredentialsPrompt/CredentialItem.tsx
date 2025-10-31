@@ -33,7 +33,7 @@ const CredentialItem = ({ label = "", value = "" }: ICredentialsItem) => {
       <InputLabel>{label}</InputLabel>
       <ReadBox
         actionButton={
-          <CopyToClipboard text={value}>
+          <CopyToClipboard text={value} as={React.Fragment as any}>
             <Button
               id={"copy-path"}
               variant="regular"
