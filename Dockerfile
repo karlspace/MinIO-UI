@@ -4,12 +4,12 @@
 # Stage 1: Build Frontend
 FROM node:24-alpine AS frontend-builder
 
-RUN apk add --no-cache git
+RUN apk add --no-cache git && npm install -g corepack
 
 WORKDIR /workspace/web-app
 
 COPY web-app/package.json web-app/yarn.lock web-app/.yarnrc.yml ./
-RUN corepack enable && yarn install
+RUN corepack enable && corepack prepare && yarn install
 
 COPY web-app/ ./
 RUN yarn build
