@@ -33,7 +33,8 @@
       "Bash(gh repo edit:*)",
       "Bash(yarn:*)",
       "Bash(corepack prepare:*)",
-      "Bash(npx yarn@4.4.0 install:*)"
+      "Bash(npx yarn@4.4.0 install:*)",
+      "Bash(python -m base64:*)"
     ],
     "deny": [],
     "ask": []
