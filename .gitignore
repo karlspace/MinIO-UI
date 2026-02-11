@@ -52,3 +52,10 @@ public.crt
 
 # Ignore Bin files
 bin/
+
+# Docker / Environment
+.env
+
+# Build
+web-app/build/
+coverage/
