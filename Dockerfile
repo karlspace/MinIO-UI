@@ -39,6 +39,21 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
 # Stage 3: Runtime
 FROM alpine:3.23
 
+# Metadata
+LABEL vendor="karlspace"
+LABEL maintainer="Karl Bauer <karl.bauer@bauer-group.com>"
+
+# OCI Metadata (https://github.com/opencontainers/image-spec/blob/main/annotations.md)
+LABEL org.opencontainers.image.title="Admin Console for MinIO"
+LABEL org.opencontainers.image.licenses="AGPL-3.0"
+LABEL org.opencontainers.image.vendor="karlspace"
+LABEL org.opencontainers.image.authors="Karl Bauer <karl.bauer@bauer-group.com>"
+LABEL org.opencontainers.image.source="https://github.com/karlspace/MinIO-UI"
+LABEL org.opencontainers.image.url="https://github.com/karlspace/MinIO-UI"
+LABEL org.opencontainers.image.documentation="https://github.com/karlspace/MinIO-UI#readme"
+LABEL org.opencontainers.image.description="Web-based admin console for MinIO object storage servers, preserving full admin functionality from Console v1.7.x"
+LABEL org.opencontainers.image.version="0.0.0"
+
 RUN apk add --no-cache ca-certificates curl tzdata
 
 # Create non-root user
