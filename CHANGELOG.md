@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/karlspace/MinIO-UI/compare/console-v1.0.0...console-v1.1.0) (2026-02-11)
+
+### 🚀 Features
+
+* add GitHub CLI permissions for run list and view ([92ca030](https://github.com/karlspace/MinIO-UI/commit/92ca030cbd9d10d74a5dbf031efeef814e1adf13))
+* update image version to 0.1.0 in Dockerfile ([253b59d](https://github.com/karlspace/MinIO-UI/commit/253b59dcea116401e773281bcd55f4b59447d3f5))
+
 ## 1.0.0 (2026-02-11)
 
 ### 🚀 Features
