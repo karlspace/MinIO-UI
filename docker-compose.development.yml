@@ -54,7 +54,7 @@ services:
     volumes:
       - minio-data:/data
     networks:
-      - minio-net
+      - minio
 
   # ---------------------------------------------------------------------------
   # MinIO Setup (Init-Container)
@@ -70,7 +70,7 @@ services:
   # uebersprungen (--ignore-existing / || true).
   # ---------------------------------------------------------------------------
   minio-setup:
-    image: quay.io/minio/mc:latest
+    image: quay.io/minio/mc:${MINIO_MC_VERSION:-latest}
     container_name: minio-setup
     depends_on:
       minio-server:
@@ -130,7 +130,7 @@ services:
         mc admin user list minio
         mc ls minio
     networks:
-      - minio-net
+      - minio
 
   # ---------------------------------------------------------------------------
   # Admin Console for MinIO
@@ -157,17 +157,19 @@ services:
     ports:
       - "${CONSOLE_PORT:-9090}:9090"   # Admin Console Web-UI
     depends_on:
+      minio-server:
+        condition: service_healthy    
       minio-setup:
         condition: service_completed_successfully
     networks:
-      - minio-net
+      - minio
 
 # =============================================================================
 # Netzwerk und Volumes
 # =============================================================================
 
 networks:
-  minio-net:
+  minio:
     driver: bridge
 
 volumes:
