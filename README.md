@@ -127,6 +127,16 @@ See [MINIO_SERVER_API_CALLS.md](MINIO_SERVER_API_CALLS.md) for the MinIO Server 
 
 ---
 
+## Related Forks
+
+| Project | Description | Status |
+|---------|-------------|--------|
+| [OpenMaxIO/mds](https://github.com/OpenMaxIO/mds) | 1:1 Fork of MinIO Design System (minio/mds). Used as dependency source since the original repo was deleted. Our fork: [karlspace/MinIO-MDS](https://github.com/karlspace/MinIO-MDS) | Maintained |
+| [opens3](https://github.com/opens3) | Community fork of several MinIO repos (mds, object-browser). Has own branding (OpenS3 logo, modified login page). No tags/releases, no security patches. | Unmaintained |
+| [OpenMaxIO](https://github.com/OpenMaxIO) | Fork of the full MinIO Console with admin features preserved. Source for cherry-picked security patches. | Maintained |
+
+---
+
 ## License
 
 GNU Affero General Public License v3.0 - see [LICENSE](LICENSE).
