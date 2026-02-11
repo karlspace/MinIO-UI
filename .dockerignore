@@ -1,0 +1,39 @@
+.git/
+.github/
+.claude/
+.vscode/
+.idea/
+
+# Build artifacts
+console
+*.test
+*.out
+coverage/
+web-app/build/
+web-app/node_modules/
+web-app/coverage/
+web-app/playwright-report/
+
+# Documentation (not needed in image)
+*.md
+docs/
+images/
+
+# Tests
+*_test.go
+integration/
+replication/
+sso-integration/
+
+# Docker meta
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Dev files
+*.swp
+*.swo
+*~
+.DS_Store
+*.tmp
+*.log
