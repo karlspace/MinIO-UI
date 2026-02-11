@@ -8,11 +8,8 @@ RUN apk add --no-cache git
 
 WORKDIR /workspace/web-app
 
-COPY web-app/package.json web-app/yarn.lock web-app/.yarnrc.yml ./
-RUN corepack enable && corepack prepare && yarn install
-
 COPY web-app/ ./
-RUN yarn build
+RUN corepack enable && corepack prepare && yarn install && yarn build
 
 # Stage 2: Build Backend
 FROM golang:1.26-alpine AS backend-builder
