@@ -8,8 +8,6 @@ services:
     environment:
       CONSOLE_MINIO_SERVER: "http://minio:9000"
       CONSOLE_MINIO_REGION: "${CONSOLE_MINIO_REGION:-us-east-1}"
-      CONSOLE_PBKDF_PASSPHRASE: "${CONSOLE_PBKDF_PASSPHRASE:-}"
-      CONSOLE_PBKDF_SALT: "${CONSOLE_PBKDF_SALT:-}"
     expose:
       - "9090/tcp"
     ports:
