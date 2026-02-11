@@ -1,0 +1,138 @@
+name: "🚀 Release & Docker Build"
+
+on:
+  push:
+    branches: [feature/admin-console-v2]
+    paths-ignore:
+      - '.github/**'
+      - '*.md'
+      - 'docs/**'
+  pull_request:
+    branches: [feature/admin-console-v2]
+    paths:
+      - 'cmd/**'
+      - 'api/**'
+      - 'pkg/**'
+      - 'web-app/**'
+      - 'Dockerfile'
+      - 'docker-compose*.yml'
+      - '.dockerignore'
+      - 'go.mod'
+      - 'go.sum'
+  workflow_dispatch:
+    inputs:
+      force-release:
+        description: 'force create release'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  packages: write
+  security-events: write
+
+jobs:
+  # ============================================
+  # Validation Jobs
+  # ============================================
+
+  validate-compose:
+    name: "🔍 Validate Docker Compose"
+    uses: bauer-group/automation-templates/.github/workflows/modules-validate-compose.yml@main
+    with:
+      compose-files: '["docker-compose.development.yml"]'
+      env-template: |
+        {
+          "MINIO_VERSION": "latest",
+          "MINIO_MC_VERSION": "latest",
+          "MINIO_ROOT_USER": "minioadmin",
+          "MINIO_ROOT_PASSWORD": "minioadmin",
+          "MINIO_REGION": "us-east-1",
+          "TIME_ZONE": "UTC",
+          "CONSOLE_ACCESS_KEY": "console",
+          "CONSOLE_SECRET_KEY": "console",
+          "CONSOLE_PORT": "9090"
+        }
+
+  validate-scripts:
+    name: "🔍 Validate Shell Scripts"
+    uses: bauer-group/automation-templates/.github/workflows/modules-validate-shellscript.yml@main
+    with:
+      scan-directory: '.'
+      severity: 'error'
+
+  # ============================================
+  # Release Job (only on branch push)
+  # ============================================
+
+  release:
+    name: "📦 Create Semantic Release"
+    needs: [validate-compose, validate-scripts]
+    if: |
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
+      needs.validate-compose.result == 'success' &&
+      needs.validate-scripts.result == 'success'
+    uses: bauer-group/automation-templates/.github/workflows/modules-semantic-release.yml@main
+    with:
+      target-branch: 'feature/admin-console-v2'
+      dry-run: false
+      force-release: ${{ inputs.force-release || false }}
+    secrets: inherit
+
+  # ============================================
+  # Docker Build Jobs
+  # ============================================
+
+  docker-build-release:
+    name: "🐳 Build & Push Docker Image"
+    needs: release
+    if: needs.release.outputs.release-created == 'true'
+    uses: bauer-group/automation-templates/.github/workflows/docker-build.yml@main
+    with:
+      deploy-environment: 'production'
+      publish-to: 'ghcr'
+      ghcr-image-name: 'karlspace/MinIO-UI/minio-admin-console'
+      docker-image-name: 'karlspace/minio-admin-console'
+
+      release-version: ${{ needs.release.outputs.version }}
+
+      update-dockerfile-version: true
+      auto-tags: true
+      latest-tag: true
+
+      dockerfile-path: './Dockerfile'
+      docker-context: '.'
+      platforms: 'linux/amd64'
+
+      push: true
+
+      security-scan: false
+      security-fail-on: 'CRITICAL'
+      generate-sbom: true
+      sync-dockerhub-readme: false
+    secrets: inherit
+
+  docker-build-pr:
+    name: "🔨 Validate Docker Build (PR)"
+    needs: [validate-compose, validate-scripts]
+    if: |
+      github.event_name == 'pull_request' &&
+      needs.validate-compose.result == 'success' &&
+      needs.validate-scripts.result == 'success'
+    uses: bauer-group/automation-templates/.github/workflows/docker-build.yml@main
+    with:
+      publish-to: 'ghcr'
+      ghcr-image-name: 'karlspace/MinIO-UI/minio-admin-console'
+
+      auto-tags: true
+      dockerfile-path: './Dockerfile'
+      docker-context: '.'
+      platforms: 'linux/amd64'
+
+      push: false
+
+      security-scan: false
+      security-fail-on: 'CRITICAL'
+    secrets: inherit
