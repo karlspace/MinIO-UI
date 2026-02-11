@@ -2,9 +2,9 @@
 # Builds frontend (React/TypeScript) and backend (Go) in optimized stages
 
 # Stage 1: Build Frontend
-FROM node:24-alpine AS frontend-builder
+FROM node:22-alpine AS frontend-builder
 
-RUN apk add --no-cache git && npm install -g corepack
+RUN apk add --no-cache git
 
 WORKDIR /workspace/web-app
 
