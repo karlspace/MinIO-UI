@@ -24,39 +24,6 @@ A web-based admin console for MinIO object storage servers. This fork preserves 
 
 ---
 
-## Quick Start (Docker)
-
-```bash
-docker compose -f docker-compose.development.yml up --build
-```
-
-This starts:
-- **MinIO Server** on `localhost:9000` (API) and `localhost:9001` (built-in console)
-- **MinIO Setup** - init container that creates an admin user and a demo bucket
-- **Admin Console** on `localhost:9090`
-
-Login with `minioconsole` / `minioconsole` (or the values from `.env`).
-
-### Environment
-
-Copy `.env.example` to `.env` to customize:
-
-```bash
-cp .env.example .env
-```
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `MINIO_ROOT_USER` | `minioadmin` | MinIO root user |
-| `MINIO_ROOT_PASSWORD` | `minioadmin` | MinIO root password |
-| `MINIO_REGION` | `us-east-1` | MinIO server region |
-| `MINIO_VERSION` | `latest` | MinIO server image tag |
-| `CONSOLE_ACCESS_KEY` | `minioconsole` | Console admin user |
-| `CONSOLE_SECRET_KEY` | `minioconsole` | Console admin password |
-| `CONSOLE_PORT` | `9090` | Console port mapping |
-
----
-
 ## Add to Existing MinIO Stack
 
 The pre-built image is available from GitHub Container Registry:
@@ -76,7 +43,6 @@ services:
     container_name: admin-console-minio
     restart: unless-stopped
     environment:
-      # MinIO Server URL (internal Docker hostname or external address)
       CONSOLE_MINIO_SERVER: "http://minio:9000"
       CONSOLE_MINIO_REGION: "us-east-1"
     ports:
@@ -95,10 +61,27 @@ services:
 The console authenticates with a MinIO user that has admin privileges.
 This user must be created beforehand (e.g. via `mc admin user add`).
 
-| Variable | Description |
-|----------|-------------|
-| `CONSOLE_MINIO_SERVER` | URL to MinIO Server (e.g. `http://minio:9000`) |
-| `CONSOLE_MINIO_REGION` | MinIO region (default: `us-east-1`) |
+| Variable               | Description                                       |
+|------------------------|---------------------------------------------------|
+| `CONSOLE_MINIO_SERVER` | URL to MinIO Server (e.g. `http://minio:9000`)    |
+| `CONSOLE_MINIO_REGION` | MinIO region (default: `us-east-1`)               |
+
+---
+
+## Development
+
+A complete development environment with MinIO server, init container, and console is provided:
+
+```bash
+docker compose -f docker-compose.development.yml up --build
+```
+
+After startup:
+
+- **Admin Console** on `http://localhost:9090` (login: `minioconsole` / `minioconsole`)
+- **MinIO API** on `http://localhost:9000`
+
+Copy `.env.example` to `.env` to customize. See `docker-compose.development.yml` for all available variables.
 
 ---
 
@@ -107,7 +90,7 @@ This user must be created beforehand (e.g. via `mc admin user add`).
 ### Prerequisites
 
 - Go 1.26+
-- Node.js 24+ (LTS)
+- Node.js 22+ (LTS)
 - Yarn (via corepack)
 
 ### Backend
@@ -174,11 +157,11 @@ See [MINIO_SERVER_API_CALLS.md](MINIO_SERVER_API_CALLS.md) for the MinIO Server 
 
 ## Related Forks
 
-| Project | Description | Status |
-|---------|-------------|--------|
-| [OpenMaxIO/mds](https://github.com/OpenMaxIO/mds) | 1:1 Fork of MinIO Design System (minio/mds). Used as dependency source since the original repo was deleted. Our fork: [karlspace/MinIO-MDS](https://github.com/karlspace/MinIO-MDS) | Maintained |
-| [opens3](https://github.com/opens3) | Community fork of several MinIO repos (mds, object-browser). Has own branding (OpenS3 logo, modified login page). No tags/releases, no security patches. | Unmaintained |
-| [OpenMaxIO](https://github.com/OpenMaxIO) | Fork of the full MinIO Console with admin features preserved. Source for cherry-picked security patches. | Maintained |
+| Project                                              | Description                                                                                                                                                                  | Status       |
+|------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| [OpenMaxIO/mds](https://github.com/OpenMaxIO/mds)   | 1:1 Fork of MinIO Design System (minio/mds). Used as dependency source since the original repo was deleted. Our fork: [karlspace/MinIO-MDS](https://github.com/karlspace/MinIO-MDS) | Maintained   |
+| [opens3](https://github.com/opens3)                 | Community fork of several MinIO repos (mds, object-browser). Has own branding (OpenS3 logo, modified login page). No tags/releases, no security patches.                    | Unmaintained |
+| [OpenMaxIO](https://github.com/OpenMaxIO)           | Fork of the full MinIO Console with admin features preserved. Source for cherry-picked security patches.                                                                     | Maintained   |
 
 ---
 
