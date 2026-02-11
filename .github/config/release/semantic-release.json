@@ -1,5 +1,6 @@
 {
   "branches": ["feature/admin-console-v2"],
+  "tagFormat": "console-v${version}",
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
