@@ -57,26 +57,26 @@ cp .env.example .env
 
 ---
 
-## Docker Image in bestehendem MinIO Stack
+## Add to Existing MinIO Stack
 
-Das fertige Image wird ueber GitHub Container Registry bereitgestellt:
+The pre-built image is available from GitHub Container Registry:
 
 ```
 ghcr.io/karlspace/minio-ui/minio-admin-console:latest
 ```
 
-Um die Admin Console in einen bestehenden MinIO Stack zu integrieren, den folgenden Service in die vorhandene `docker-compose.yml` einfuegen:
+To integrate the Admin Console into an existing MinIO stack, add the following service to your `docker-compose.yml`:
 
 ```yaml
 services:
-  # ... bestehende MinIO Services ...
+  # ... existing MinIO services ...
 
   admin-console:
     image: ghcr.io/karlspace/minio-ui/minio-admin-console:latest
     container_name: admin-console-minio
     restart: unless-stopped
     environment:
-      # MinIO Server URL (Docker-interner Hostname oder externe Adresse)
+      # MinIO Server URL (internal Docker hostname or external address)
       CONSOLE_MINIO_SERVER: "http://minio:9000"
       CONSOLE_MINIO_REGION: "us-east-1"
     ports:
@@ -88,17 +88,17 @@ services:
       - minio
 ```
 
-> **Hinweis:** `CONSOLE_MINIO_SERVER` muss auf die S3 API des MinIO Servers zeigen (Port 9000),
-> nicht auf die eingebaute MinIO Console (Port 9001). Der Hostname muss innerhalb des
-> Docker-Netzwerks erreichbar sein.
+> **Note:** `CONSOLE_MINIO_SERVER` must point to the MinIO S3 API (port 9000),
+> not the built-in MinIO Console (port 9001). The hostname must be reachable
+> within the Docker network.
 
-Die Console authentifiziert sich mit einem MinIO-User der Admin-Rechte hat.
-Dieser muss vorab angelegt werden (z.B. ueber `mc admin user add`).
+The console authenticates with a MinIO user that has admin privileges.
+This user must be created beforehand (e.g. via `mc admin user add`).
 
-| Variable | Beschreibung |
+| Variable | Description |
 |----------|-------------|
-| `CONSOLE_MINIO_SERVER` | URL zum MinIO Server (z.B. `http://minio:9000`) |
-| `CONSOLE_MINIO_REGION` | MinIO Region (Standard: `us-east-1`) |
+| `CONSOLE_MINIO_SERVER` | URL to MinIO Server (e.g. `http://minio:9000`) |
+| `CONSOLE_MINIO_REGION` | MinIO region (default: `us-east-1`) |
 
 ---
 
