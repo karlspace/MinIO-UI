@@ -34,7 +34,9 @@
       "Bash(yarn:*)",
       "Bash(corepack prepare:*)",
       "Bash(npx yarn@4.4.0 install:*)",
-      "Bash(python -m base64:*)"
+      "Bash(python -m base64:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)"
     ],
     "deny": [],
     "ask": []
