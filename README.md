@@ -57,6 +57,51 @@ cp .env.example .env
 
 ---
 
+## Docker Image in bestehendem MinIO Stack
+
+Das fertige Image wird ueber GitHub Container Registry bereitgestellt:
+
+```
+ghcr.io/karlspace/minio-ui/minio-admin-console:latest
+```
+
+Um die Admin Console in einen bestehenden MinIO Stack zu integrieren, den folgenden Service in die vorhandene `docker-compose.yml` einfuegen:
+
+```yaml
+services:
+  # ... bestehende MinIO Services ...
+
+  admin-console:
+    image: ghcr.io/karlspace/minio-ui/minio-admin-console:latest
+    container_name: admin-console-minio
+    restart: unless-stopped
+    environment:
+      # MinIO Server URL (Docker-interner Hostname oder externe Adresse)
+      CONSOLE_MINIO_SERVER: "http://minio:9000"
+      CONSOLE_MINIO_REGION: "us-east-1"
+    ports:
+      - "9090:9090"
+    depends_on:
+      minio:
+        condition: service_healthy
+    networks:
+      - minio
+```
+
+> **Hinweis:** `CONSOLE_MINIO_SERVER` muss auf die S3 API des MinIO Servers zeigen (Port 9000),
+> nicht auf die eingebaute MinIO Console (Port 9001). Der Hostname muss innerhalb des
+> Docker-Netzwerks erreichbar sein.
+
+Die Console authentifiziert sich mit einem MinIO-User der Admin-Rechte hat.
+Dieser muss vorab angelegt werden (z.B. ueber `mc admin user add`).
+
+| Variable | Beschreibung |
+|----------|-------------|
+| `CONSOLE_MINIO_SERVER` | URL zum MinIO Server (z.B. `http://minio:9000`) |
+| `CONSOLE_MINIO_REGION` | MinIO Region (Standard: `us-east-1`) |
+
+---
+
 ## Build from Source
 
 ### Prerequisites
