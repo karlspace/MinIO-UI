@@ -30,7 +30,10 @@
       "WebFetch(domain:www.npmjs.com)",
       "Bash(gh search:*)",
       "Bash(gh repo fork:*)",
-      "Bash(gh repo edit:*)"
+      "Bash(gh repo edit:*)",
+      "Bash(yarn:*)",
+      "Bash(corepack prepare:*)",
+      "Bash(npx yarn@4.4.0 install:*)"
     ],
     "deny": [],
     "ask": []
