@@ -1,3 +1,46 @@
+## [1.8.0](https://github.com/karlspace/MinIO-UI/compare/v1.7.6...v1.8.0) (2026-02-11)
+
+### 🚀 Features
+
+* add Docker configuration for MinIO Console with entrypoint script and environment setup ([a970e68](https://github.com/karlspace/MinIO-UI/commit/a970e688fb8bbafdd773ba1607b6e0fed2a5a0be))
+* add minio-setup init container for dev environment ([1e6358a](https://github.com/karlspace/MinIO-UI/commit/1e6358a12f48feac08612b50ddf1f0acee5fde92))
+* Aktualisierung der Login-Seitenbeschreibung und -links zur besseren Benutzerführung ([af9d579](https://github.com/karlspace/MinIO-UI/commit/af9d579dcffad93f73c0396f168e587d4a6c6bcb))
+* Aktualisierung des Dockerfiles zur Installation von Git und Optimierung des Frontend-Bauprozesses ([93a1855](https://github.com/karlspace/MinIO-UI/commit/93a18555eb10143ab4e8a551ee38dd74724a637d))
+* Anpassung der CopyToClipboard-Komponente zur Verwendung von React.Fragment in mehreren Dateien ([a1f44ee](https://github.com/karlspace/MinIO-UI/commit/a1f44ee71d460a53e619b46cf8f6b923c2fcf53f))
+* auto release workflow ([ec32008](https://github.com/karlspace/MinIO-UI/commit/ec320082e45fd17502e1aa8af92d7ef9a058bb91))
+* Einführung des obligatorischen Parameters CONSOLE_MINIO_REGION und Validierung in der Einstiegsskript ([53ef4ee](https://github.com/karlspace/MinIO-UI/commit/53ef4ee4f82f9f47314e6c72ce4f92cb43857ffd))
+* hinzufügen einer Analyse der entfernten Funktionalitäten in MinIO Console v2.0.0 ([5f19f8a](https://github.com/karlspace/MinIO-UI/commit/5f19f8a4cd9fb4d0e969b89efc9233d034c684c9))
+* hinzufügen von Sicherheitsupdates und Wiederherstellungsplan für Full Admin-Funktionalität ([5e3aead](https://github.com/karlspace/MinIO-UI/commit/5e3aeadff65385c087b4a6bcfefa39501b25ea36))
+* Replace logo.svg with a new design featuring a gradient background and a storage/database icon, along with an admin/console symbol represented as a gear. ([daf1cec](https://github.com/karlspace/MinIO-UI/commit/daf1cec7d4d65efc036674226f2fdb5f7f2c85b6))
+* restructure Docker setup and rewrite README ([ffdee75](https://github.com/karlspace/MinIO-UI/commit/ffdee758326e5745892bed5c69694ff415d39a7e))
+* umfassende Überarbeitung der Projektdokumentation und Rebranding zum 'Admin Console for MinIO®' ([1534817](https://github.com/karlspace/MinIO-UI/commit/15348174be8c952788c0095212c5c364452d4825))
+
+### 🐛 Bug Fixes
+
+* add CRLF handling to Dockerfile entrypoint and document deployment readiness ([9e032f3](https://github.com/karlspace/MinIO-UI/commit/9e032f33235811bf711296ab43b7e3327b03b0d9))
+* Aktualisierung des Titels und der Version im Swagger-Dokument für die Admin-Konsole ([aa0980f](https://github.com/karlspace/MinIO-UI/commit/aa0980f37cfe3062c69ebbc8bfe417b98461ec6e))
+* Behebung von TypeScript-Inkompatibilitäten in mehreren Komponenten und Anpassung des WebSocket-Typs ([4160447](https://github.com/karlspace/MinIO-UI/commit/4160447d6a69b865e6c8a5ce5fa8f00625cf724d))
+* buld references ([38e9437](https://github.com/karlspace/MinIO-UI/commit/38e9437902b262d94ace84b78dbf026710ae9b2e))
+* default secrets ([a5dabe9](https://github.com/karlspace/MinIO-UI/commit/a5dabe95a6e3799766e3fdc9ac5680cb73455b5e))
+* Entfernen von MinIO-Logos und Ersetzen durch markenrechtlich unbedenkliche Icons; Einführung des obligatorischen Parameters CONSOLE_MINIO_REGION ([bf8c348](https://github.com/karlspace/MinIO-UI/commit/bf8c348b79f4a0e52c1bfa2f105741ea8f345add))
+* Entfernen von Screenshots mit MinIO-Branding zur Wahrung der rechtlichen Compliance ([058f679](https://github.com/karlspace/MinIO-UI/commit/058f67902040aaf219d1d03e0a71188066709106))
+* gitignore fuer .env, web-app/build und coverage ([7610645](https://github.com/karlspace/MinIO-UI/commit/7610645f25e2fadb17440a710cc30fbe087587db))
+* hardcode healthcheck port (port mapping is external) ([9bb88e4](https://github.com/karlspace/MinIO-UI/commit/9bb88e41d149cc3439a6bbaaf0562e97cf911036))
+* Hinzufügen von .claude/ zum .gitignore ([2d61ccb](https://github.com/karlspace/MinIO-UI/commit/2d61ccb5a6ca5a3edcf8fe2501428476f469024d))
+* install corepack separately for Node 24 ([2306241](https://github.com/karlspace/MinIO-UI/commit/2306241063c1edaa4fcbb94bd6d06a3df05000df))
+* remove non-existent .yarn directory from Dockerfile COPY ([8be46f1](https://github.com/karlspace/MinIO-UI/commit/8be46f1a9f66e9b6b351611c611ee37b3cc70849))
+* remove TLS/HTTPS support (Traefik handles TLS) ([5cf267b](https://github.com/karlspace/MinIO-UI/commit/5cf267bfdc43c7bb806ae2fdc15c927d31eb6180))
+* remove unnecessary PBKDF env vars from dev compose ([ccdb892](https://github.com/karlspace/MinIO-UI/commit/ccdb892162e434ddb4414e4a7e228a84609ca1cc))
+* script errors ([edbdcb0](https://github.com/karlspace/MinIO-UI/commit/edbdcb05d584c317a96f473075a30d9f9b70cc0b))
+* streamline entrypoint script permissions and certificate directory setup ([8a872e5](https://github.com/karlspace/MinIO-UI/commit/8a872e52682e99ff972848e56a403037db73bb5f))
+* update to Node 24 LTS and Go 1.26 ([11e7291](https://github.com/karlspace/MinIO-UI/commit/11e7291574d44ce01c25ebfc5e2b5c7623e39807))
+* update yarn install flag from --frozen-lockfile to --immutable ([8437b72](https://github.com/karlspace/MinIO-UI/commit/8437b72966422838f15ffcabb6f17eaf15d5004c))
+* yarn build ([363a77c](https://github.com/karlspace/MinIO-UI/commit/363a77c25ecdb29cb927c6e16d1e5a1b4cd497c4))
+
+### ♻️ Refactoring
+
+* Entfernen von Lizenzinformationen und -benachrichtigungen aus MenuWrapper und validRoutes ([a9e84ab](https://github.com/karlspace/MinIO-UI/commit/a9e84ab4e2ad2c8039e0ea5c1b22bf4fb3ff2837))
+
 # Changelog - Admin Console for MinIO®
 
 > **Disclaimer:** MinIO® is a registered trademark of MinIO, Inc. This project is an independent, third-party administrative interface and is not affiliated with MinIO, Inc.
