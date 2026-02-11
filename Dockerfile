@@ -52,7 +52,7 @@ LABEL org.opencontainers.image.source="https://github.com/karlspace/MinIO-UI"
 LABEL org.opencontainers.image.url="https://github.com/karlspace/MinIO-UI"
 LABEL org.opencontainers.image.documentation="https://github.com/karlspace/MinIO-UI#readme"
 LABEL org.opencontainers.image.description="Web-based admin console for MinIO object storage servers, preserving full admin functionality from Console v1.7.x"
-LABEL org.opencontainers.image.version="0.0.0"
+LABEL org.opencontainers.image.version="0.1.0"
 
 RUN apk add --no-cache ca-certificates curl tzdata
 
