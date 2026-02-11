@@ -16,7 +16,21 @@
       "Bash(xargs grep:*)",
       "Bash(cat:*)",
       "Bash(export PATH=\"/c/Program Files/Go/bin:$PATH\":*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(while read hash rest)",
+      "Bash(do if git log --format=\"%b\" -1 $hash)",
+      "Bash(then echo \"HAS CO-AUTHOR: $hash $rest\")",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch:*)",
+      "Bash(docker compose:*)",
+      "Bash(curl:*)",
+      "Bash(npm view:*)",
+      "Bash(gh api:*)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(gh search:*)",
+      "Bash(gh repo fork:*)",
+      "Bash(gh repo edit:*)"
     ],
     "deny": [],
     "ask": []
