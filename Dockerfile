@@ -41,7 +41,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
     ./cmd/console
 
 # Stage 3: Runtime
-FROM alpine:3.21
+FROM alpine:3.24
 
 RUN apk add --no-cache ca-certificates curl tzdata
 
@@ -64,10 +64,8 @@ USER console
 
 EXPOSE 9090
 
-ENV CONSOLE_PORT=9090
-
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-    CMD curl -sf http://localhost:${CONSOLE_PORT}/api/v1/health || exit 1
+    CMD curl -sf http://localhost:9090/api/v1/health || exit 1
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 CMD ["server"]
