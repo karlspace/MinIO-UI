@@ -41,7 +41,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
     ./cmd/console
 
 # Stage 3: Runtime
-FROM alpine:3.24
+FROM alpine:3.23
 
 RUN apk add --no-cache ca-certificates curl tzdata
 

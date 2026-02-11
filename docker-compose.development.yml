@@ -1,24 +1,32 @@
-services:
-  console:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: admin-console-minio
-    restart: unless-stopped
-    environment:
-      CONSOLE_MINIO_SERVER: "http://minio-server:9000"
-      CONSOLE_MINIO_REGION: "${MINIO_REGION:-us-east-1}"
-    expose:
-      - "9090/tcp"
-    ports:
-      - "${CONSOLE_PORT:-9090}:9090"
-    depends_on:
-      minio-setup:
-        condition: service_completed_successfully
-    networks:
-      - minio-net
+# =============================================================================
+# Admin Console for MinIO - Development Environment
+# =============================================================================
+#
+# Startet eine vollstaendige Entwicklungsumgebung mit:
+#   1. MinIO Server        - Object Storage Backend
+#   2. MinIO Setup         - Init-Container: legt Admin-User und Demo-Bucket an
+#   3. Admin Console       - Web-UI fuer MinIO Administration
+#
+# Verwendung:
+#   docker compose -f docker-compose.development.yml up --build
+#
+# Nach dem Start:
+#   - Admin Console:       http://localhost:9090  (Login: console / console)
+#   - MinIO API:           http://localhost:9000
+#   - MinIO Built-in UI:   http://localhost:9001  (Login: minioadmin / minioadmin)
+#
+# Konfiguration ueber .env Datei (siehe .env.example)
+# =============================================================================
 
+services:
+
+  # ---------------------------------------------------------------------------
   # MinIO Object Storage Server
+  # ---------------------------------------------------------------------------
+  # S3-kompatibler Object Storage. Dient als Backend fuer die Admin Console.
+  # Port 9000 = S3 API, Port 9001 = MinIO eigene Web-UI (nicht unsere Console).
+  # Daten werden im Volume 'minio-data' persistiert.
+  # ---------------------------------------------------------------------------
   minio-server:
     image: quay.io/minio/minio:${MINIO_VERSION:-latest}
     container_name: minio-server
@@ -41,14 +49,26 @@ services:
       - MINIO_ROOT_USER=${MINIO_ROOT_USER:-minioadmin}
       - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-minioadmin}
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # MinIO Built-in Web-UI
     volumes:
       - minio-data:/data
     networks:
       - minio-net
 
-  # MinIO Setup (creates admin user for console on first start)
+  # ---------------------------------------------------------------------------
+  # MinIO Setup (Init-Container)
+  # ---------------------------------------------------------------------------
+  # Einmaliger Container der nach dem MinIO-Start:
+  #   1. Einen Admin-User fuer die Console anlegt (CONSOLE_ACCESS_KEY)
+  #   2. Eine Policy mit vollen admin:* und s3:* Rechten erstellt
+  #   3. Die Policy dem Console-User zuweist
+  #   4. Einen Demo-Bucket anlegt
+  #
+  # Laeuft nur einmal durch und beendet sich dann (exit 0).
+  # Bei erneutem 'docker compose up' werden bestehende User/Buckets
+  # uebersprungen (--ignore-existing / || true).
+  # ---------------------------------------------------------------------------
   minio-setup:
     image: quay.io/minio/mc:latest
     container_name: minio-setup
@@ -65,15 +85,18 @@ services:
     command:
       - -c
       - |
-        echo 'Waiting for MinIO to be ready...'
+        echo '=== MinIO Setup ==='
         sleep 5
-        echo 'Configuring MinIO client...'
+
+        # mc Client mit Root-Credentials verbinden
         mc alias set minio http://minio-server:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD}
 
-        echo 'Creating console admin user: '$${CONSOLE_ACCESS_KEY}
+        # 1. Admin-User fuer die Console anlegen
+        echo 'Erstelle Console-User: '$${CONSOLE_ACCESS_KEY}
         mc admin user add minio $${CONSOLE_ACCESS_KEY} $${CONSOLE_SECRET_KEY} || true
 
-        echo 'Creating admin policy...'
+        # 2. Policy mit vollen Admin- und S3-Rechten
+        echo 'Erstelle Admin-Policy...'
         cat > /tmp/admin-policy.json << EOF
         {
           "Version": "2012-10-17",
@@ -91,17 +114,57 @@ services:
         }
         EOF
         mc admin policy create minio consoleAdmin /tmp/admin-policy.json || true
+
+        # 3. Policy dem Console-User zuweisen
         mc admin policy attach minio consoleAdmin --user $${CONSOLE_ACCESS_KEY} || true
 
-        echo 'Creating demo bucket...'
+        # 4. Demo-Bucket anlegen
+        echo 'Erstelle Demo-Bucket...'
         mc mb --ignore-existing minio/demo-bucket
 
-        echo 'MinIO setup complete!'
-        echo 'Console login: '$${CONSOLE_ACCESS_KEY}' / '$${CONSOLE_SECRET_KEY}
+        # Ergebnis ausgeben
+        echo ''
+        echo '=== Setup abgeschlossen ==='
+        echo 'Console Login: '$${CONSOLE_ACCESS_KEY}' / '$${CONSOLE_SECRET_KEY}
+        echo ''
         mc admin user list minio
         mc ls minio
     networks:
       - minio-net
+
+  # ---------------------------------------------------------------------------
+  # Admin Console for MinIO
+  # ---------------------------------------------------------------------------
+  # Web-basierte Admin-Oberflaeche. Verbindet sich ueber die S3/Admin-API
+  # mit dem MinIO Server. Wird aus dem Dockerfile gebaut (Go Backend + React
+  # Frontend in einem Multi-Stage Build).
+  #
+  # Startet erst nachdem minio-setup erfolgreich durchgelaufen ist,
+  # damit der Console-User bereits existiert.
+  # ---------------------------------------------------------------------------
+  console:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: admin-console-minio
+    restart: unless-stopped
+    environment:
+      # Verbindung zum MinIO Server (Docker-interner Hostname)
+      CONSOLE_MINIO_SERVER: "http://minio-server:9000"
+      CONSOLE_MINIO_REGION: "${MINIO_REGION:-us-east-1}"
+    expose:
+      - "9090/tcp"
+    ports:
+      - "${CONSOLE_PORT:-9090}:9090"   # Admin Console Web-UI
+    depends_on:
+      minio-setup:
+        condition: service_completed_successfully
+    networks:
+      - minio-net
+
+# =============================================================================
+# Netzwerk und Volumes
+# =============================================================================
 
 networks:
   minio-net:
@@ -109,3 +172,4 @@ networks:
 
 volumes:
   minio-data:
+    # MinIO Daten. 'docker compose down -v' loescht auch die Daten.
