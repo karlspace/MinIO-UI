@@ -59,8 +59,8 @@ cp .env.example .env
 
 ### Prerequisites
 
-- Go 1.24+
-- Node.js 18+ (see `.nvmrc`)
+- Go 1.26+
+- Node.js 24+ (LTS)
 - Yarn (via corepack)
 
 ### Backend

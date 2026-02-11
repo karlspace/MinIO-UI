@@ -2,7 +2,7 @@
 # Builds frontend (React/TypeScript) and backend (Go) in optimized stages
 
 # Stage 1: Build Frontend
-FROM node:18-alpine AS frontend-builder
+FROM node:24-alpine AS frontend-builder
 
 RUN apk add --no-cache git
 
@@ -16,7 +16,7 @@ COPY web-app/ ./
 RUN yarn build
 
 # Stage 2: Build Backend
-FROM golang:1.24-alpine AS backend-builder
+FROM golang:1.26-alpine AS backend-builder
 
 RUN apk add --no-cache ca-certificates tzdata git
 
