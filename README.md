@@ -35,7 +35,7 @@ This starts:
 - **MinIO Setup** - init container that creates an admin user and a demo bucket
 - **Admin Console** on `localhost:9090`
 
-Login with `console` / `console123` (or the values from `.env`).
+Login with `console` / `console` (or the values from `.env`).
 
 ### Environment
 
@@ -52,7 +52,7 @@ cp .env.example .env
 | `MINIO_REGION` | `us-east-1` | MinIO server region |
 | `MINIO_VERSION` | `latest` | MinIO server image tag |
 | `CONSOLE_ACCESS_KEY` | `console` | Console admin user |
-| `CONSOLE_SECRET_KEY` | `console123` | Console admin password |
+| `CONSOLE_SECRET_KEY` | `console` | Console admin password |
 | `CONSOLE_PORT` | `9090` | Console port mapping |
 
 ---

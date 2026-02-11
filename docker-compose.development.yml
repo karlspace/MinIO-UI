@@ -174,4 +174,4 @@ networks:
 
 volumes:
   minio-data:
-    # MinIO Daten. 'docker compose down -v' loescht auch die Daten.
+  # MinIO Daten. 'docker compose down -v' loescht auch die Daten.
