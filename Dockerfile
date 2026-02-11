@@ -9,7 +9,6 @@ RUN apk add --no-cache git
 WORKDIR /workspace/web-app
 
 COPY web-app/package.json web-app/yarn.lock web-app/.yarnrc.yml ./
-COPY web-app/.yarn ./.yarn
 RUN corepack enable && yarn install
 
 COPY web-app/ ./

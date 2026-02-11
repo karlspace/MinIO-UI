@@ -14,7 +14,9 @@
       "Bash(grep:*)",
       "Bash(find:*)",
       "Bash(xargs grep:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(export PATH=\"/c/Program Files/Go/bin:$PATH\":*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []
