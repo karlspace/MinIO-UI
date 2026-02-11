@@ -32,9 +32,10 @@ docker compose -f docker-compose.development.yml up --build
 
 This starts:
 - **MinIO Server** on `localhost:9000` (API) and `localhost:9001` (built-in console)
+- **MinIO Setup** - init container that creates an admin user and a demo bucket
 - **Admin Console** on `localhost:9090`
 
-Login with `minioadmin` / `minioadmin`.
+Login with `console` / `console123` (or the values from `.env`).
 
 ### Environment
 
@@ -44,14 +45,15 @@ Copy `.env.example` to `.env` to customize:
 cp .env.example .env
 ```
 
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `CONSOLE_MINIO_SERVER` | Yes | `http://minio:9000` | MinIO server endpoint |
-| `CONSOLE_MINIO_REGION` | Yes | `us-east-1` | MinIO server region |
-| `CONSOLE_PBKDF_PASSPHRASE` | No | auto-generated | JWT encryption secret |
-| `CONSOLE_PBKDF_SALT` | No | auto-generated | JWT salt |
-| `MINIO_ROOT_USER` | No | `minioadmin` | MinIO root user (dev) |
-| `MINIO_ROOT_PASSWORD` | No | `minioadmin` | MinIO root password (dev) |
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `MINIO_ROOT_USER` | `minioadmin` | MinIO root user |
+| `MINIO_ROOT_PASSWORD` | `minioadmin` | MinIO root password |
+| `MINIO_REGION` | `us-east-1` | MinIO server region |
+| `MINIO_VERSION` | `latest` | MinIO server image tag |
+| `CONSOLE_ACCESS_KEY` | `console` | Console admin user |
+| `CONSOLE_SECRET_KEY` | `console123` | Console admin password |
+| `CONSOLE_PORT` | `9090` | Console port mapping |
 
 ---
 

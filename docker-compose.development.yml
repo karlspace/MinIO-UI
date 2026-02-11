@@ -6,40 +6,100 @@ services:
     container_name: admin-console-minio
     restart: unless-stopped
     environment:
-      CONSOLE_MINIO_SERVER: "http://minio:9000"
-      CONSOLE_MINIO_REGION: "${CONSOLE_MINIO_REGION:-us-east-1}"
+      CONSOLE_MINIO_SERVER: "http://minio-server:9000"
+      CONSOLE_MINIO_REGION: "${MINIO_REGION:-us-east-1}"
     expose:
       - "9090/tcp"
     ports:
       - "${CONSOLE_PORT:-9090}:9090"
     depends_on:
-      minio:
-        condition: service_healthy
+      minio-setup:
+        condition: service_completed_successfully
     networks:
       - minio-net
 
-  minio:
-    image: quay.io/minio/minio:latest
-    container_name: minio
+  # MinIO Object Storage Server
+  minio-server:
+    image: quay.io/minio/minio:${MINIO_VERSION:-latest}
+    container_name: minio-server
     restart: unless-stopped
-    command: server /data --console-address ":9001"
+    hostname: minio-server
+    command: server --address ":9000" --console-address ":9001" /data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 4
+      start_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "3"
     environment:
-      MINIO_ROOT_USER: "${MINIO_ROOT_USER:-minioadmin}"
-      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD:-minioadmin}"
-    expose:
-      - "9000/tcp"
-      - "9001/tcp"
+      - TZ=${TIME_ZONE:-Etc/UTC}
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER:-minioadmin}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-minioadmin}
     ports:
       - "9000:9000"
       - "9001:9001"
     volumes:
       - minio-data:/data
-    healthcheck:
-      test: ["CMD", "mc", "ready", "local"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 5s
+    networks:
+      - minio-net
+
+  # MinIO Setup (creates admin user for console on first start)
+  minio-setup:
+    image: quay.io/minio/mc:latest
+    container_name: minio-setup
+    depends_on:
+      minio-server:
+        condition: service_healthy
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER:-minioadmin}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-minioadmin}
+      - CONSOLE_ACCESS_KEY=${CONSOLE_ACCESS_KEY:-console}
+      - CONSOLE_SECRET_KEY=${CONSOLE_SECRET_KEY:-console}
+      - MINIO_REGION=${MINIO_REGION:-us-east-1}
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        echo 'Waiting for MinIO to be ready...'
+        sleep 5
+        echo 'Configuring MinIO client...'
+        mc alias set minio http://minio-server:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD}
+
+        echo 'Creating console admin user: '$${CONSOLE_ACCESS_KEY}
+        mc admin user add minio $${CONSOLE_ACCESS_KEY} $${CONSOLE_SECRET_KEY} || true
+
+        echo 'Creating admin policy...'
+        cat > /tmp/admin-policy.json << EOF
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Action": ["admin:*"],
+              "Effect": "Allow"
+            },
+            {
+              "Action": ["s3:*"],
+              "Effect": "Allow",
+              "Resource": ["arn:aws:s3:::*"]
+            }
+          ]
+        }
+        EOF
+        mc admin policy create minio consoleAdmin /tmp/admin-policy.json || true
+        mc admin policy attach minio consoleAdmin --user $${CONSOLE_ACCESS_KEY} || true
+
+        echo 'Creating demo bucket...'
+        mc mb --ignore-existing minio/demo-bucket
+
+        echo 'MinIO setup complete!'
+        echo 'Console login: '$${CONSOLE_ACCESS_KEY}' / '$${CONSOLE_SECRET_KEY}
+        mc admin user list minio
+        mc ls minio
     networks:
       - minio-net
 
