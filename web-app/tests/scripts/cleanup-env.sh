@@ -1,3 +1,4 @@
+#!/bin/bash
 add_alias() {
   for i in $(seq 1 4); do
     echo "... attempting to add alias $i"
