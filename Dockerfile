@@ -58,13 +58,11 @@ COPY entrypoint.sh /app/entrypoint.sh
 # Fix line endings and set permissions
 RUN sed -i 's/\r$//' /app/entrypoint.sh && \
     chmod +x /app/entrypoint.sh && \
-    mkdir -p /home/console/.console/certs && \
     chown -R console:console /home/console /app
 
 USER console
 
-# HTTP Console / HTTPS Console
-EXPOSE 9090 9443
+EXPOSE 9090
 
 ENV CONSOLE_PORT=9090
 

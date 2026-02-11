@@ -117,22 +117,6 @@ The console starts on port `9090` (configurable with `--port`).
 
 ---
 
-## TLS
-
-Place certificates in `~/.console/certs/`:
-
-```bash
-~/.console/certs/
-├── public.crt
-├── private.key
-└── CAs/          # For self-signed MinIO server certs
-    └── ca.crt
-```
-
-The console auto-detects certificates and serves HTTPS on port `9443`.
-
----
-
 ## Version
 
 Based on MinIO Console v1.7.6 with security patches from v2.0.x applied.
